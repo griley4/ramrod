@@ -12,17 +12,20 @@ L9:    DRIFT, L=0.025;
 L10:   DRIFT, L=0.0;
 eoption,seed=84848;
 BendErr = (0.5*PI*(RANF()*0.002));
-quadErr = (RANF()-0.5)*0.001;
+quadErr0 = (RANF()-0.5)*0.001;
+quadErr1 = (RANF()-0.5)*0.001;
+quadErr2 = (RANF()-0.5)*0.001;
+quadErr3 = (RANF()-0.5)*0.001;
 
 EANG:=13*TWOPI/360;
 M:     SBEND, ANGLE=0.50*PI+BendErr, L=2.2, E1=EANG,E2=EANG;
 QMATCHING: quadrupole, K1=-1.0, L=0.3;
 QCHECK: quadrupole, K1=-0.5829*0.1, L=0.6;
 ! QCHECK: quadrupole, K1=-0.8809883544, L=0.6; !To have the resonnance at 0.666
-Q1:    quadrupole, K1=-0.9087199*1.4+quadErr,  L=0.30;
-Q2:    quadrupole, K1=1.15080073*0.0+quadErr, L=0.30;
-Q4:    quadrupole, K1=-1.41670463*1.4+quadErr,  L=0.30;
-Q5:    quadrupole, K1=1.63828572*1.27+quadErr, L=0.30;
+Q1:    quadrupole, K1=-0.9087199*1.4+quadErr0,  L=0.30;
+Q2:    quadrupole, K1=1.15080073*0.0+quadErr1, L=0.30;
+Q4:    quadrupole, K1=-1.41670463*1.4+quadErr2,  L=0.30;
+Q5:    quadrupole, K1=1.63828572*1.27+quadErr3, L=0.30;
 
 S1:    SEXTUPOLE, K2= 23.28982393, L=0.25;
 S2:    SEXTUPOLE, K2=-22.64483773, L=0.25;
