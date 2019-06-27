@@ -1,0 +1,109 @@
+TITLE,"RAMROD";
+! CIS =1/5 of Cooler circumference =86.82m / 5 =17.364m;
+! It accelerates protons from 7 MeV to 200 MeV in 1-5 Hz.;
+
+
+BEAM, ENERGY = 0.250+0.938, PARTICLE = PROTON;
+! *********************************************
+! Strength + Parameters
+! *********************************************
+RHO:=1.35;
+KQ := +0.9;
+LCELL:=4.; 
+LQ:= 0.3;
+LB:= 2.0; 
+L2:=0.5*(LCELL-LB-LQ); 
+L3:= 1.5;
+EANG:=10.*TWOPI/360; 
+!EANG= 0.0;
+ANG := TWOPI/4;
+KQ1:= -0.9;
+! *********************************************
+! Element definitions
+! *********************************************
+D1: DRIFT, L=L3;
+D2: DRIFT, L=0.2;
+
+OO : DRIFT,L=L2;
+BD : SBEND,L=LB, ANGLE=ANG, E1=EANG,E2=EANG, K2=0.;
+MQ : QUADRUPOLE,L=LQ, K1=KQ;
+MQF : QUADRUPOLE,L=LQ, K1=+KQ1;
+MQD : QUADRUPOLE,L=LQ, K1=-KQ1;
+OBS1: MARKER; 
+OBS2: MARKER; 
+! Sextupole
+
+! *********************************************
+! Sequence
+! *********************************************
+ACHROM: LINE=(MQD,D2,MQF,D2,BD,OO,MQ,OO,BD,D2,MQF,D2,MQD,OBS1); ! a superperiod
+RING: LINE=(ACHROM,
+            D1,ACHROM,D1);
+          
+!*********************************************
+! MATCH
+! *********************************************
+
+
+BEAM;
+use, sequence=RING;
+TWISS,DELTAP=0.0;
+PLOT,Table=twiss,HAXIS=S,VAXIS=BETX,BETY,DX,
+           colour=100,STYLE=1,interpolate=true;
+
+stop;
+/************************************************************
+ * MAD uses pt as the 5th variable NOT delta-p.
+ * The result is that all derivatives are with repect to pt.
+ * This is the reason for the non-standard dispersion values
+ * for non-relativistic machines, like the PSB
+ * Ax and Ay are the apertures in number of sigmas
+ ************************************************************/
+!beta=sqrt(1-1/beam->gamma^2);
+!disp:=beta*table(twiss,dx); ! Delta_x=disp*Delta_p/p;
+!hx:=table(twiss,aper_1);
+! hx := (table(twiss,aper_1)+table(twiss,aper_3)-abs(table(twiss,aper_1)-table(twiss,aper_3)))/2; ! MIN( aper_1, aper_3)
+! hy := (table(twiss,aper_2)+table(twiss,aper_4)-abs(table(twiss,aper_2)-table(twiss,aper_4)))/2; ! MIN( aper_2, aper_4)
+! sx := SQRT(table(twiss,betx)*beam->ex);
+!! sy := SQRT(table(twiss,bety)*beam->ey);
+! option, -warn;
+! Ax := SQRT((hx^2-(3*disp*beam->sige)^2)/(table(twiss,betx)*beam->ex));
+! Ay := SQRT(hy^2/(table(twiss,bety)*beam->ey)); ! There is no dispersion in vertical plane
+! option, warn;
+
+!select, flag=twiss, clear;
+!select, flag=twiss, column=name, s,x,alfx,alfy,betx,bety,DX,disp,apertype,aper_1,aper_2,aper_3,aper_4,hx,hy,sx,sy,Ax,Ay;
+!twiss, file = twiss.out;
+!PLOT,Table=twiss,HAXIS=S,VAXIS=BETX,BETY,disp,
+!           colour=100,STYLE=1,interpolate=true;
+           
+stop;
+match,sequence=RING;
+CONSTRAINT, sequence=RING,range=OBS1,DX=0.0, DPX=0.0;
+vary, name=KQ,step=0.1;
+lmdif,calls=5000,tolerance=1.e-5;
+
+
+use, sequence=RING;
+TWISS,DELTAP=0.0;
+PLOT,Table=twiss,HAXIS=S,VAXIS=BETX,BETY,DX,
+           colour=100,STYLE=1,interpolate=true;
+stop;
+
+match,sequence=RING;
+CONSTRAINT, sequence=RING,range=OBS1,DX=0.0, DPX=0.0;
+vary, name=KQ,step=1.0e-4;
+lmdif,calls=5000,tolerance=1.e-20;
+
+
+! *********************************************
+! TWISS + PLOT
+! *********************************************
+
+USE, sequence=RING;
+select, flag=twiss, clear;
+select, flag=twiss, column=s,betx,mux,dx,bety,muy;  
+TWISS,DELTAP=0.0;
+PLOT,Table=twiss,HAXIS=S,VAXIS=BETX,BETY,DX,
+           colour=100,STYLE=1,interpolate=true;
+STOP;

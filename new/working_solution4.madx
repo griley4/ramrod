@@ -1,0 +1,159 @@
+TITLE, "RAMROD / MAM";
+
+LSSE = 0.2; 
+LPSSE= 0.1; 
+L00:    DRIFT, L=1.0;
+L01:    DRIFT, L=0.1;
+
+LPS:   DRIFT, L= 0.1; 
+LS:    DRIFT, L=LSSE+LPSSE; 
+L1:    DRIFT, L=0.05;
+L2:    DRIFT, L=0.1;
+L3:    DRIFT, L=0;
+L5:    DRIFT, L=0.25;
+L6:    DRIFT, L=0.1;
+L7:    DRIFT, L=0.05;
+L8:    DRIFT, L=0.3;
+L9:    DRIFT, L=0.025;
+L10:   DRIFT, L=0.0;
+
+EANG:=13*TWOPI/360;
+M:     SBEND, ANGLE=0.50*PI, L=2.2, E1=EANG,E2=EANG;
+SEPTA:     HKICKER, kick=0, L=0.9;
+
+QMATCHING: quadrupole, K1=-1.0, L=0.3;
+QM: quadrupole, K1=-0.5829*0.3, L=0.6;
+! QCHECK: quadrupole, K1=-0.8809883544, L=0.6; !To have the resonnance at 0.666
+Q1:    quadrupole, K1=-0.9087199*1.5,  L=0.30;
+Q2:    quadrupole, K1=1.15080073*0.0, L=0.30;
+Q4:    quadrupole, K1=-1.41670463*1.8,  L=0.30;
+Q5:    quadrupole, K1=1.63828572*1.34, L=0.30;
+
+S1:    SEXTUPOLE, K2= 23.28982393, L=0.25;
+S2:    SEXTUPOLE, K2=-22.64483773, L=0.25;
+S3:    SEXTUPOLE, K2=-16.5150*0, L=0.2527;
+S4:    SEXTUPOLE, K2= 15.1194*0, L=0.2527;
+SSE:    SEXTUPOLE, K2= 0.0, L=LSSE;
+
+OBS : MARKER;
+
+HSECTOR1: LINE=(SEPTA,L01,SSE,LPS,QM,L1,L2,M,L6,Q4,L7,S2,L8,Q5,L9);
+HSECTOR2: LINE=(L00,LS, QM,L1,L2,M,L6,Q4,L7,L5,L8,Q5,L9);
+HSECTOR3: LINE=(L00,LS, QM,L1,L2,M,L6,Q4,L7,S2,L8,Q5,L9);
+HSECTOR4: LINE=(L00,LS, QM,L1,L2,M,L6,Q4,L7,L5,L8,Q5,L9);
+
+SECTOR1:  LINE=(HSECTOR1,S1,-HSECTOR2);
+SECTOR2:  LINE=(HSECTOR3,S1,-HSECTOR4);
+RING : LINE=(SECTOR1, SECTOR2);
+
+BEAM, ENERGY = 0.250+0.938, PARTICLE = PROTON;
+
+
+USE, SEQUENCE=RING;
+MATCH,sequence=RING;
+GLOBAL, sequence=RING,Q1=1.33333333333333;
+vary, name=QM->K1,step=0.0001;
+lmdif,calls=5000,tolerance=1.e-20;
+ENDMATCH;
+
+!VALUE, QCHECK->K1;
+
+
+USE, SEQUENCE=RING;
+MATCH,sequence=RING;
+GLOBAL, sequence=RING,DQ1=-0.0,DQ2=-0.0;
+vary, name=S2->K2,step=0.0001;
+vary, name=S1->K2,step=0.0001;
+lmdif,calls=5000,tolerance=1.e-20;
+ENDMATCH;
+
+VALUE, S1->K2;
+VALUE, S2->K2;
+VALUE, QM->K1;
+VALUE, Q5->K1;
+VALUE, Q4->K1;
+
+USE, period=RING;
+TWISS, deltap=0.0, table = twiss;
+select, flag=twiss, column=name,s,L,betx,mux,alfx,dx,bety,muy,alfy,K1,K2,ANGLE;
+select, flag = twiss, clear;
+twiss, file = twiss_33.out;
+!TWISS, deltap=0.0, BETX=15, BETY=10,DX=0;
+PLOT,HAXIS=S,VAXIS1=BETX,BETY,DX,colour=100,interpolate=true, file = tune33;
+PLOT,HAXIS=S,VAXIS1=DX,colour=100,interpolate=true;
+PLOT,HAXIS=S,VAXIS1=MUX,MUY,colour=100,interpolate=true;
+
+
+stop;
+/************************************************************
+ * MAD uses pt as the 5th variable NOT delta-p.
+ * The result is that all derivatives are with repect to pt.
+ * This is the reason for the non-standard dispersion values
+ * for non-relativistic machines, like the PSB
+ * Ax and Ay are the apertures in number of sigmas
+ ************************************************************/
+beta=sqrt(1-1/beam->gamma^2);
+value, beta; 
+
+!disp:=beta*table(twiss,dx); ! Delta_x=disp*Delta_p/p;
+!table(twiss,disp)=disp;
+
+!CREATE, TABLE=twissedit, COLUMN= disp, disp, _namee;
+!hx:=table(twiss,aper_1);
+! hx := (table(twiss,aper_1)+table(twiss,aper_3)-abs(table(twiss,aper_1)-table(twiss,aper_3)))/2; ! MIN( aper_1, aper_3)
+! hy := (table(twiss,aper_2)+table(twiss,aper_4)-abs(table(twiss,aper_2)-table(twiss,aper_4)))/2; ! MIN( aper_2, aper_4)
+! sx := SQRT(table(twiss,betx)*beam->ex);
+!! sy := SQRT(table(twiss,bety)*beam->ey);
+! option, -warn;
+! Ax := SQRT((hx^2-(3*disp*beam->sige)^2)/(table(twiss,betx)*beam->ex));
+! Ay := SQRT(hy^2/(table(twiss,bety)*beam->ey)); ! There is no dispersion in vertical plane
+! option, warn;
+
+!select, flag=twiss, clear;
+!select, flag=twiss, column=name, s,x,alfx,alfy,betx,bety,DX,disp,apertype,aper_1,aper_2,aper_3,aper_4,hx,hy,sx,sy,Ax,Ay;
+!twiss, file = twiss.out;
+USE, period=RING;
+
+
+
+PLOT,HAXIS=S,VAXIS1=BETX,BETY,DX,colour=100,interpolate=true;
+
+!PLOT,Table=twiss,HAXIS=S,VAXIS=BETX,BETY,disp,
+!           colour=100,STYLE=1,interpolate=true;
+           
+
+!use, sequence=RING;
+!TWISS,DELTAP=0.0;
+!PLOT,Table=twiss,HAXIS=S,VAXIS=BETX,BETY,DX,
+!           colour=100,STYLE=1,interpolate=true;
+
+stop;
+
+
+
+
+
+
+
+
+
+
+stop;
+
+select,flag=twiss, clear;
+select,flag=twiss;
+twiss,sequence=RING, file=twiss.out;
+
+PLOT,HAXIS=S,VAXIS1=BETX,BETY,DX,colour=100,interpolate=true;
+PLOT,HAXIS=S,VAXIS1=DX,colour=100,interpolate=true;
+
+STOP;
+
+select, flag=twiss, clear;
+select, flag=twiss, column=s,betx,mux,dx,bety,muy;
+Resbeam;
+Beam,  particle=electron, radiate=true, energy=7.0;
+USE, period=RING;
+EMIT, DELTAP=-0.00;
+TWISS, SEQUENCE=RING, FILE=aps96_emit.out;
+STOP;
