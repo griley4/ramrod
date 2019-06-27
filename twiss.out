@@ -42,8 +42,8 @@
 @ SYNCH_5          %le                   0
 @ TITLE            %12s "RAMROD / MAM"
 @ ORIGIN           %16s "5.05.01 Linux 64"
-@ DATE             %08s "26/06/19"
-@ TIME             %08s "21.56.07"
+@ DATE             %08s "27/06/19"
+@ TIME             %08s "14.00.31"
 * NAME                                S                  L               BETX                MUX               ALFX                 DX               BETY                MUY               ALFY                 K1                 K2              ANGLE 
 $ %s                                %le                %le                %le                %le                %le                %le                %le                %le                %le                %le                %le                %le 
  "RING$START"                         0                  0        2.687066713                  0   -1.453772627e-15      0.02387694482         2.85159256                  0   -2.507952653e-16                  0                  0                  0
