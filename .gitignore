@@ -1,4 +1,5 @@
 twiss.out
+*.bak
 *.blg
 *.log
 *.aux
