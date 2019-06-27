@@ -1,3 +1,8 @@
 twiss.out
+*.blg
+*.log
+*.aux
+*.bbl
+*.pdf
 *.swp
 
