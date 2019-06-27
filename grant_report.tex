@@ -1,5 +1,6 @@
 \documentclass[12pt]{article}
 \usepackage{times}
+\usepackage{amsmath}
 \usepackage{geometry}
 \geometry{letterpaper, portrait, margin=1in}
 \usepackage[utf8]{inputenc}
@@ -13,6 +14,8 @@
 \newcommand{\done}{\rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\cmark}}%
 \hspace{-2.5pt}}
 \newcommand{\wontfix}{\rlap{$\square$}{\large\hspace{1pt}\xmark}}
+\bibliographystyle{elsarticle-num}
+
 
 \begin{document}
 \raggedright
@@ -36,7 +39,7 @@ Email: griley4@vols.utk.edu
 
 Elisabeth Renner: Technical Institute of Vienna
 
-Robin Tesse:
+Robin Tesse: 
 
 Eustache G: 
 \linebreak
@@ -49,6 +52,7 @@ at least 2 Gray per second.
 \include{paper}
 
 \pagebreak
-\textbf{References}
+
+\bibliography{mybibfile}
 
 \end{document}
