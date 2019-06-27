@@ -73,21 +73,21 @@ PLOT,HAXIS=S,VAXIS1=BETX,BETY,DX,colour=100,interpolate=true;
 PLOT,HAXIS=S,VAXIS1=DX,colour=100,interpolate=true;
 
 stop;
-
-select,flag=twiss, clear;
-select,flag=twiss;
-twiss,sequence=RING, file=twiss.out;
-
-PLOT,HAXIS=S,VAXIS1=BETX,BETY,DX,colour=100,interpolate=true;
-PLOT,HAXIS=S,VAXIS1=DX,colour=100,interpolate=true;
-
-STOP;
-
-select, flag=twiss, clear;
-select, flag=twiss, column=s,betx,mux,dx,bety,muy;
-Resbeam;
-Beam,  particle=electron, radiate=true, energy=7.0;
-USE, period=RING;
-EMIT, DELTAP=-0.00;
-TWISS, SEQUENCE=RING, FILE=aps96_emit.out;
-STOP;
+!
+!select,flag=twiss, clear;
+!select,flag=twiss;
+!twiss,sequence=RING, file=twiss.out;
+!
+!PLOT,HAXIS=S,VAXIS1=BETX,BETY,DX,colour=100,interpolate=true;
+!PLOT,HAXIS=S,VAXIS1=DX,colour=100,interpolate=true;
+!
+!STOP;
+!
+!select, flag=twiss, clear;
+!select, flag=twiss, column=s,betx,mux,dx,bety,muy;
+!Resbeam;
+!Beam,  particle=proton, radiate=true, energy=1187;
+!USE, period=RING;
+!EMIT, DELTAP=-0.00;
+!TWISS, SEQUENCE=RING, FILE=aps96_emit.out;
+!STOP;
