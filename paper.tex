@@ -2,9 +2,9 @@
 
 The Reduced Area Medical Rectangular Oncological Device (RAMROD) shown in Figure \ref{fig:ram} is a proposed proton synchrotron for treatment of cancer patients.  
 The device will deliver up to 2
-Gray per second (\gs) to a 1 $mm^3$ tumor area.  The beam will originate in a 50 mA ion source, will be accelerated through a radio frequency quadropole (RFQ) and 
-a drift tube linear accelerator (DTL) up to 7~\mev of energy. The beam will be injected into the synchrotron lattice, and accelerated to 250~\mev.  The sextopole 
-magnet will be ramped to create the specific ``Third order resonance'' 
+Gray per second (\gs) to a 1 $mm^3$ tumor area.  The beam will originate in a 50 mA ion source, will be accelerated through a radio frequency quadrupole (RFQ) and 
+a drift tube linear accelerator (DTL) up to 7~\mev of energy. The beam will be injected into the synchrotron lattice, and further accelerated to 250~\mev.  The sextupole 
+magnet will be ramped to create the specific ``third order resonance'' 
 beam shape needed for a slow extraction over a few seconds. The extraction is 
 performed by placing a thin electrostatic septum made of tungsten wire 
 at a point where a single arm of the 3rd order resonance will intersect the field region.  These
@@ -18,7 +18,7 @@ scanned over a small area during the several second extraction in order to deliv
   \begin{center}
     \includegraphics[width=0.9\textwidth]{ramrod.png}
     \caption{A computer drawing (created in BDSIM) of the proposed synchrotron.  The dipole magnets are shown in blue,
-    the quadropoles are shown in red, and the sextopoles are shown in yellow.  The extraction septum is shown in purple. The RF system can be placed flexibly, however 
+    the quadrupoles are shown in red, and the sextupoles are shown in yellow.  The extraction septum is shown in purple. The RF system can be placed flexibly, however 
   it is expected to be located opposite the extraction septum, where the most free space exists.}
   \end{center}
   \label{fig:ram}
@@ -26,12 +26,12 @@ scanned over a small area during the several second extraction in order to deliv
 Operation in scanning mode would require a higher beam intensity in order to deliver the required dose to each scan point.  Higher intensity is possible through the choice
 of ion source, injection scheme and extraction time. 
 
-The proton source is an Ion source similar to the one used at the SNS in ORNL.  The system is capable of producing 50mA of protons, 
+The proton source is an ion source similar to the one used at the SNS in ORNL.  The system is capable of producing 50mA of protons, 
 which would provide $~3*10^{17}$ protons per second.  The 1 $mm^3$ of tumor area is approximately 1 mg of water, which would require $5*10^4$ protons per second to 
 reach the nominal dose rate.  The slow extraction of the beam means that a fractional amount is extracted per turn, therefore we require a beam intensity of 
-$>1*10^8$ for a 1000 turn extraction, pessimistically assuming 50\% extraction efficiency.  In order to keep the space charge tune shift smaller than 
-$\nu_{sc} \le 0.2$ the machine is limited to approximately $1*10^{11}$ protons if operated in single bunch mode. This limitation 
-only affects the length of time a single fill can be used for treatment. 
+$>1*10^8$ for a 1000 turn extraction, pessimistically assuming 50\% extraction efficiency.  In order to keep the space charge tune shift 
+$\nu_{sc} \le 0.2$ the machine is limited to approximately $1*10^{11}$ protons in a single bunch. 
+
 The major parameters of the accelerator are listed in Table \ref{tab:major}.  
 \begin{table}[!hbt]
   \centering
@@ -59,12 +59,13 @@ The major parameters of the accelerator are listed in Table \ref{tab:major}.
 
 
 \section{Lattice}
-The major design consideration was to keep the lattice size smaller than a large room, which suits a rectangular shape.  The 4 main steering dipoles making up the
-corners, with about 23m around the whole ring.  Two straight sections are longer than the others (7m and 4m respectively), leaving free space for beam 
+The major design consideration was to keep the lattice size smaller than a large room, so as not to take up too much hospital space.  
+The 4 main steering dipoles making up the
+corners, with a total circumference of 22.8 m.  Two straight sections are longer (7m) than the others (4m), leaving free space for beam 
 monitoring equipment and injection/extraction septa and magnets.  The longer straights are designed to be dispersion free regions to easily match injected beams
-and the RF cavity with zero momentum spread.  Additionally the resonant sextopole for slow extraction will operate in a dispersion zero region.
-The beam tunes should be far from any resonances, so that during the slow extraction, the tune can be adjusted in order to extract more of the beam.
-The other sextopoles operate in a non-zero dispersion region in order to change the chromaticity of the beam.  One sextopole is installed where it can effect
+and the RF cavity with zero momentum spread.  Additionally the resonant sextupole for slow extraction will operate in a dispersion zero region.
+The beam tunes should be far from any resonances so that during slow extraction the tune can be dynamically adjusted to extract more of the beam.
+The other sextupoles operate in a non-zero dispersion region in order to change the chromaticity of the beam.  One sextupole is installed where it can effect
 $\beta_y$ strongly, and the other so that it may change primarily $\beta_x$.  The dipole magnets are designed to contain large non-superconducting copper loops
 which produce $1.7 Tesla$ over a length of $2.2 m$. A small aperture in the $y$ direction strongly reduces the required current in the dipoles, and so a small 
 $\beta_y$ is designed into the machine.  
@@ -83,40 +84,41 @@ $\beta_y$ is designed into the machine.
 
 \subsection{Design}
 The synchrotron lattice can be seen in Figure \ref{fig:lat} along with the betatron tunes, dispersion and beam size.  The large white boxes correspond to the dipole
-magnets, the dark boxes labeled Q correspond to quadropoles, and the boxes labeled S correspond to sextopoles.  The box labeled SEPTA is the beginning of the 
+magnets, the dark boxes labeled Q correspond to quadrupoles, and the boxes labeled S correspond to sextupoles.  The box labeled SEPTA is the beginning of the 
 electromagnetic septum.  The design was completed in MAD-X, a lattice simulation software.  The 4 large dipoles provide weak focusing to the $\beta_x$ function which 
 can be seen in its evolution in Figure \ref{fig:lat}.  The weak focusing goes with $1/\rho^2$ where $\rho = B * q/p = 1.4m$.  Edge angles of $\theta = 13^\circ$ provide
 so called ``edge focusing'' in the $\beta_y$ function, which provides a majority of the focusing in that direction for this lattice. Two double bend acromat (DBA) cells
 are included in the lattice to create straight  sections where dispersion is zero.  
 \subsection{Apertures} 
-Figure \ref{fig:lat} show the $2\sigma$ beam size at the injection and extraction points, magnet apertures must be made larger than this area.  The magnet alignment
+Figure \ref{fig:lat} shows the $2\sigma$ beam size at the injection and extraction points. Magnet apertures must be made larger than this, however magnet alignment
 uncertainty was not included in this study. The assumed rms-emittance is 2 mm-mrad, however this value is dependant on intensity of the beam, and might need to 
 be re-evaluated if a long term high intensity operation is needed.  A larger emittance will require larger magnet apertures, which will need to be designed with
-more wire loops or longer length in order to maintain their non-superconducting, and therefore cheaper and easier to maintain, nature.  
+more wire loops or longer length in order to maintain their non-superconducting nature.  
 \subsection{RF}
-The RF system is assumed to be locate in one of the longer straight sections of the lattice.  The RF Voltage should be chose to allow for sub 1-second ramp times which
+The RF system is assumed to be located in one of the longer straight sections of the lattice.  The RF voltage should be chosen to allow for sub 1 second ramp times which
 is quite feasible with the listed revolution period in Table \ref{tab:major}.  A minimum of 250V can be supplied each revolution, however a higher voltage RF cavity 
 would allow the ramp time to easily shrink by a factor of two or three. 
 \subsection{Slow Extraction}
-The resonant sextopole which will drive the slow extraction is placed in a region of zero dispersion to avoid resonance excursion by off momentum particles.  The 
-electrostatic septum is also placed in a region of zero dispersion, such that the beam undergoes a phase advance of $\frac{5\pi}{2}$ so that only a single arm of
+The resonant sextupole which will drive the slow extraction is placed in a region of zero dispersion to avoid resonance excursion by off momentum particles.  The 
+electrostatic septum is also placed in a region of zero dispersion.  These locations are chosen such that the beam 
+undergoes a phase advance of $\frac{5\pi}{2}$ between the elements, so that only a single arm of
 the third order resonant beam will be extracted each turn.  A length of 1m is reserved for the electrostatic septum and magnetic septum, however the total length
 needed should be evaluated further.  There is room to expand the septum area upstream if there is not enough space to fit the extraction magnets next to the 
 corner dipole.  
-\subsection{Injection}
-The injection devices are not included in the current study but are assumed to take up the long section across from the extraction area where there is room to add 
-a kicker magnet.  A single turn injection is foreseen, since the ion source is capable of enough current to provide $~1e11$ protons in half of a turn which approaches
-the space charge limits discussed earlier.  However a multi turn injection could be utilized if a weaker ion source is desired, with no major change in the lattice. The
+\subsection{Injection} 
+The injection devices are not included in the current study but are assumed to require a kicker magnet in the straight section across from the extraction.  
+A single turn injection is foreseen, since the ion source is capable of enough current to provide $~1e11$ protons in half of a period.
+However a multi turn injection could be utilized if a weaker ion source is desired, with no major change in the lattice. The
 multi-turn injection would require the usage of closed-orbit bumper magnets as well as an injection kicker.  The bumper magnets require a spacing of $\pi$ with respect
-to each other, and therefor cold be placed in the middle of the Double Bend Acromats on either side of the injection area.   
+to each other, and therefore cold be placed in the middle of the DBAs on either side of the injection area.   
  
-\section{Conclusion and Outlook}
+\section{Conclusion and Outlook} 
 A small footprint medical synchrotron was presented and discussed.  Not all aspects are fully considered in this report, but note is made where further
-design is needed.  The guiding principle was the reduced area, having a high current ion source allows for single-turn injection and a slow extraction over several
+design is needed.  The guiding principle was the reduced area.  Including a high current ion source allows for single-turn injection and a slow extraction over several
 seconds.  The dispersion zero region adds flexibility for injection and extraction mechanics, however finding areas of appropriate phase advance outside the DBAs is 
 difficult.  
  
-\section{Appendix A: Magnet parameters and currents}
+\section{Appendix A: Magnet parameters and currents} 
 
 \begin{table}[]
   \caption{Hardware Parameters for the Main Dipoles at Injection and Extraction Energy.}
